@@ -59,8 +59,8 @@ public class CubicApproximation extends AbstractApproximation{
         double a2 = det3 / det;
         double a3 = det4 / det;
 //        writeResult(a0 + "+" + a1 + "x+" + a2 + "x²+" + a3 + "x³");
-
-        coef = "a0 = " + a0 + " a1 = " + a1 + " a2 = " + a2 + " a3 = " + a3;
+        coef = "a3 = " + a3 + " a2 = " + a2 + " a1 = " + a1 + " a0 = " + a0;
+//        coef = "a0 = " + a0 + " a1 = " + a1 + " a2 = " + a2 + " a3 = " + a3;
         return x -> a0 + a1 * x + a2 * x * x + a3 * x * x * x;
     }
 }

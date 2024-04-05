@@ -49,10 +49,11 @@ public class Chart {
         xyDataset2.addSeries(series2);
         xyDataset2.addSeries(series3);
         xyDataset2.addSeries(series4);
-        xyDataset2.addSeries(series5);
-        xyDataset2.addSeries(series6);
-        xyDataset2.addSeries(series7);
-
+        if(power != null) {
+            xyDataset2.addSeries(series5);
+            xyDataset2.addSeries(series6);
+            xyDataset2.addSeries(series7);
+        }
         show(xyDataset1, xyDataset2);
     }
 

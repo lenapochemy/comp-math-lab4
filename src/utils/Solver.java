@@ -58,7 +58,11 @@ public class Solver {
         }
 
         double minStDev =Double.MAX_VALUE;
-        for(int i = 0; i < 6; i++){
+        int m;
+        if(!negativeData){
+            m = 6;
+        } else m = 3;
+        for(int i = 0; i < m; i++){
             if(stDevs[i] < minStDev) minStDev = stDevs[i];
         }
 

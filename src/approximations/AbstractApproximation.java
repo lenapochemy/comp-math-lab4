@@ -17,7 +17,6 @@ public abstract class AbstractApproximation {
     public String name, coef, type;
 
     public AbstractApproximation(int n, double[] x, double[] y, String name,String type, boolean outputMode, FileWriter file, boolean negativeData){
-//        setOutputMode(true);
         this.outputMode = outputMode;
         this.negativeData = negativeData;
         this.file = file;
@@ -35,24 +34,23 @@ public abstract class AbstractApproximation {
             phi = new double[n];
             eps = new double[n];
             S = 0;
-            double y_sr = 0;
+            double phi_sr = 0;
 
             for (int i = 0; i < n; i++) {
                 phi[i] = phiFunc.apply(x[i]);
                 eps[i] = phi[i] - y[i];
                 S += eps[i] * eps[i];
-                y_sr += y[i];
+                phi_sr += phi[i];
             }
 
             standardDeviation = Math.sqrt(S / n); //СКО
 
-            y_sr = y_sr / n; //у среднее
+            phi_sr = phi_sr / n; //phi среднее
             double sum1 = 0, sum2 = 0;
             for(int i = 0; i < n; i++){
                 sum1 += Math.pow((y[i] - phi[i]), 2);
-                sum2 += Math.pow((y[i] - y_sr), 2);
+                sum2 += Math.pow((y[i] - phi_sr), 2);
             }
-            System.out.println(sum1 + " " + sum2 + " " + sum1/sum2);
             R2 = 1 - sum1 / sum2; //достоверность
 
             printAllResults();
@@ -66,7 +64,17 @@ public abstract class AbstractApproximation {
         writeResult("Коэффициенты: " + coef);
         writeResult("Мера отклонения: " + S);
         writeResult("Среднеквадратичное отклонение: " + standardDeviation);
-        writeResult("Достоверность аппроксимации: " + R2 + "\n");
+        String accuracy;
+        if(R2 >= 0.95) {
+            accuracy = "Высокая точность аппроксимации";
+        } else if(R2 >= 0.75){
+            accuracy = "Удовлетворительная точность аппроксимации";
+        } else if(R2 >= 0.5){
+            accuracy = "Слабая точность аппроксимации";
+        } else {
+            accuracy = "Недостаточная точность аппроксимации";
+        }
+        writeResult("Достоверность аппроксимации: " + R2 + " -> " + accuracy + "\n");
         String res = String.format("%-6s|", "x_i");
         for(int i = 0; i < n; i++){
             res += String.format(" %-20s|", rounding(x[i]));
